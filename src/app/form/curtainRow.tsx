@@ -1,8 +1,16 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Button from "./elements/button";
 import { LabelInput } from "./elements/labeledInput";
 import SelectOption from "./elements/selectOption";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
+import FormDataContext from "@/context/formDataContext/formDataContext";
+import { IFromDataContext } from "../interface";
 
 export default function CurtainRow({
   removeRowFunction,
@@ -13,7 +21,7 @@ export default function CurtainRow({
   cloneRowFunction: UseFieldArrayRemove;
   index: number;
 }) {
-  const { watch, setValue } = useFormContext();
+  const { watch } = useFormContext();
 
   const [width, setWidth] = useState<number>(
     watch(`curtains_list.${index}.width`)
@@ -23,11 +31,21 @@ export default function CurtainRow({
   );
   const [area, setArea] = useState<number>(0);
 
+  const { totalArea, setTotalArea, listOfArea, setAreas } = useContext(
+    FormDataContext
+  ) as IFromDataContext;
+
   useEffect(() => {
     setArea(width * height);
+    setTotalArea((): number => totalArea + width * height);
+    return () => {
+      console.log(totalArea);
+      console.log("area",totalArea - width * height);
+      setTotalArea((): number => totalArea - (width * height));
+    };
   }, [width, height]);
 
-
+  // console.log("List of area", listOfArea);/
 
   function handleWidthChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.currentTarget.value;

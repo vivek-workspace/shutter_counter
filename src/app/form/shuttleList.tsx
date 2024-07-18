@@ -1,9 +1,13 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import CurtainRow from "./curtainRow";
 import Button from "./elements/button";
+import { useContext } from "react";
+import FormDataContext from "@/context/formDataContext/formDataContext";
+import { IFromDataContext } from "../interface";
 
 export default function ShutterList() {
   const { control, watch } = useFormContext();
+  const { listOfArea , totalArea, setAreas, setTotalArea} = useContext(FormDataContext) as IFromDataContext
   const { fields, append, insert, remove } = useFieldArray({
     control,
     name: "curtains_list", // unique name for your Field Array
@@ -26,6 +30,16 @@ export default function ShutterList() {
   }
 
   function removeRowFunction(index: number) {
+
+    // let areas: number[] = listOfArea;
+    // areas.splice(index,1)
+    // setAreas(areas);
+    // setTotalArea((): number =>
+    //   listOfArea.reduce((total: number, item: number): number => {
+    //     return total + item;
+    //   })
+    // );
+
     remove(index);
   }
 
@@ -44,9 +58,11 @@ export default function ShutterList() {
           />
         ))}
       </div>
-      <div className="w-1/4">
+      <div className="w-full p-2 flex justify-between items-center">
+        <div className="w-1/4">
         <Button name={"Add"} onClickFunction={addRowFunction} />
-        <p>Total Area : </p>
+        </div>
+        <p>Total Area : {totalArea} cm square </p>
       </div>
     </div>
   );

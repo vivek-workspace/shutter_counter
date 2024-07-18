@@ -18,8 +18,8 @@ export function LabelInput({
   } = useFormContext();
 
   useEffect(() => {
-    if(value) setValue(fieldName, value)  
-  },[])
+    if(value){ setValue(fieldName, value) }
+  },[value])
 
   return (
     <div

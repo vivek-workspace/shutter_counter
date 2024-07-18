@@ -26,7 +26,9 @@ export interface ILabelDate {
 }
 
 export interface IFromDataContext{
+  listOfArea: number[];
   totalArea: number;
+  setAreas: Function;
   setTotalArea: Function
 }
 
