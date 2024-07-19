@@ -4,6 +4,7 @@ import { IButton } from "../../interface";
 export default function Button({
   name,
   color,
+  type,
   reference,
   onClickFunction,
 }: IButton) {
@@ -17,7 +18,7 @@ export default function Button({
 
   return (
     <input
-      type="button"
+      type={(type=="submit")?"submit":"button"}
       onClick={handleOnClick}
       value={name}
       className={`text-white w-2/3 m-2 h-10 bg-gradient-to-r ${

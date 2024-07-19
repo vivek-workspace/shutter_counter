@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect } from "react";
 
 export function LabelInput({
   value,
+  register,
   flex,
   type,
   disabled,
@@ -12,7 +13,6 @@ export function LabelInput({
   onChangeFunction,
 }: ILabelInput) {
   const {
-    register,
     setValue,
     formState: { errors },
   } = useFormContext();

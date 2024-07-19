@@ -2,9 +2,9 @@ import { ILabelDate } from "@/app/interface"
 import { useFormContext } from "react-hook-form"
 
 
-export default function LabelDate({label, fieldName} : ILabelDate){
+export default function LabelDate({register, label, fieldName} : ILabelDate){
 
-  const { register, formState: {errors}} = useFormContext()
+  const { formState: {errors}} = useFormContext()
 
   return(
     <div className="flex justify-between items-center p-2">

@@ -10,7 +10,10 @@ import { LabelInput } from "./elements/labeledInput";
 import SelectOption from "./elements/selectOption";
 import { UseFieldArrayRemove, useFormContext } from "react-hook-form";
 import FormDataContext from "@/context/formDataContext/formDataContext";
-import { IFromDataContext } from "../interface";
+import { IFromDataContext, IOptionInterface, ShutterState } from "../interface";
+import { useSelector } from "react-redux";
+import { selectShutters } from "@/lib/features/Shutters/shutterSlice";
+
 
 export default function CurtainRow({
   removeRowFunction,
@@ -31,21 +34,21 @@ export default function CurtainRow({
   );
   const [area, setArea] = useState<number>(0);
 
-  const { totalArea, setTotalArea, listOfArea, setAreas } = useContext(
-    FormDataContext
-  ) as IFromDataContext;
+  const { register } = useFormContext();
 
   useEffect(() => {
     setArea(width * height);
-    setTotalArea((): number => totalArea + width * height);
-    return () => {
-      console.log(totalArea);
-      console.log("area",totalArea - width * height);
-      setTotalArea((): number => totalArea - (width * height));
-    };
   }, [width, height]);
 
   // console.log("List of area", listOfArea);/
+  const shutters: ShutterState = useSelector(selectShutters)
+
+  const shutterOptions: IOptionInterface[] = shutters.shutters.map((item) => {
+    return {
+      value: item.key,
+      name: item.type
+    }
+  })
 
   function handleWidthChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.currentTarget.value;
@@ -61,14 +64,16 @@ export default function CurtainRow({
     <div className="flex w-full items-center justify-between">
       <div className="w-1/4">
         <SelectOption
+          register={register}
           labelName={"Shutter Type"}
           selectName={`curtains_list.${index}.shutter_type`}
           flex="0"
-          options={[{ value: "val1", name: "shutter 1" }]}
+          options={shutterOptions}
         />
       </div>
       <div className="w-1/6">
         <LabelInput
+          register={register}
           flex="0"
           type="number"
           onChangeFunction={handleWidthChange}
@@ -79,6 +84,7 @@ export default function CurtainRow({
       </div>
       <div className="w-1/6">
         <LabelInput
+          register={register}
           flex="0"
           type="number"
           onChangeFunction={handleHeightChange}
@@ -89,6 +95,7 @@ export default function CurtainRow({
       </div>
       <div className="w-1/6">
         <LabelInput
+          register={register}
           flex="0"
           type="number"
           disabled="1"

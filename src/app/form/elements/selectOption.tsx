@@ -4,13 +4,14 @@ import { useFormContext } from "react-hook-form";
 export default function SelectOption({
   labelName,
   selectName,
+  register,
   multiple,
   flex,
   options,
   onChangeFunction,
 }: ISelectOption) {
   const {
-    register,
+   
     formState: { errors },
   } = useFormContext();
 

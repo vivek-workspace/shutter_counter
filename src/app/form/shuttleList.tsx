@@ -3,7 +3,7 @@ import CurtainRow from "./curtainRow";
 import Button from "./elements/button";
 import { useContext } from "react";
 import FormDataContext from "@/context/formDataContext/formDataContext";
-import { IFromDataContext } from "../interface";
+import { ICurtain, IFromDataContext } from "../interface";
 
 export default function ShutterList() {
   const { control, watch } = useFormContext();
@@ -18,6 +18,7 @@ export default function ShutterList() {
       shutter_type: "",
       width: 0,
       height: 0,
+      area: 0
     });
   }
 
@@ -29,17 +30,10 @@ export default function ShutterList() {
     });
   }
 
+  setTotalArea(watch("curtains_list").map((item : ICurtain) => {return Number(item.area)}).reduce((total : number, item : number) => {return total+item}));
+
+
   function removeRowFunction(index: number) {
-
-    // let areas: number[] = listOfArea;
-    // areas.splice(index,1)
-    // setAreas(areas);
-    // setTotalArea((): number =>
-    //   listOfArea.reduce((total: number, item: number): number => {
-    //     return total + item;
-    //   })
-    // );
-
     remove(index);
   }
 
@@ -62,7 +56,7 @@ export default function ShutterList() {
         <div className="w-1/4">
         <Button name={"Add"} onClickFunction={addRowFunction} />
         </div>
-        <p>Total Area : {totalArea} cm square </p>
+        <p>Total Area :   {totalArea} cm square </p>
       </div>
     </div>
   );

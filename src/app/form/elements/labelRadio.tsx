@@ -6,17 +6,17 @@ export default function LabelRadio({
   checked,
   value,
   radioName,
+  register,
   onClickFunction
 }: {
   label: string;
   value: string;
   checked?: string;
   radioName: string;
+  register?: any;
   onClickFunction?: MouseEventHandler<HTMLInputElement>
 }) {
-  const {
-    register,
-  } = useFormContext();
+
 
   return (
     <div>

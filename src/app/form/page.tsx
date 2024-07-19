@@ -7,8 +7,13 @@ import FormDataProvider from "../../context/formDataContext/formDataProvider";
 import GeneralDetails from "./generalDetails";
 import ShutterList from "./shuttleList";
 import DiscountAndTotal from "./discountAndTotal";
+import { useSelector, useDispatch } from "react-redux";
+import { createBill, selectBills } from "@/lib/features/bills/billSlice";
+import { BillState } from "../interface";
 
 export default function BillForm() {
+
+  const dispatch = useDispatch()
   const methods = useForm({
     defaultValues: {
       curtains_list: [
@@ -16,10 +21,23 @@ export default function BillForm() {
           shutter_type: "",
           width: 0,
           height: 0,
+          area: 0,
         },
       ],
     },
   });
+
+  const {handleSubmit} = methods
+
+  function submitHandler(data: any) {
+    // console.log("From data" ,data)
+    dispatch(createBill(data))
+
+   
+  }
+
+  const bills : BillState= useSelector(selectBills)
+  console.log("From State",bills.bills);
 
   return (
     <div>
@@ -30,6 +48,9 @@ export default function BillForm() {
               <GeneralDetails />
               <ShutterList />
               <DiscountAndTotal />
+              <div className="w-1/4">
+                <Button name="Submit" onClickFunction={handleSubmit(submitHandler)} />
+              </div>
             </div>
           </form>
         </FormDataProvider>
