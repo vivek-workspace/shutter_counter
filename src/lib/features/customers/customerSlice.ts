@@ -9,7 +9,7 @@ const initialState: CustomerState = {
     id: "4yd8s5s19r",
     name: "Aayush",
     email: "aayush@gmail.com",
-    phone_number: "8754215487",
+    phoneNumber: "8754215487",
     address: "Ahmedabad"
   }]
 }

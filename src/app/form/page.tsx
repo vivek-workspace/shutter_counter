@@ -9,35 +9,54 @@ import ShutterList from "./shuttleList";
 import DiscountAndTotal from "./discountAndTotal";
 import { useSelector, useDispatch } from "react-redux";
 import { createBill, selectBills } from "@/lib/features/bills/billSlice";
-import { BillState } from "../interface";
+import { Bill, BillState } from "../interface";
+import { yupResolver } from "@hookform/resolvers/yup";
+import billValidationObj from "../validators/bill.validator";
+import { useRouter, useSearchParams } from "next/navigation";
+import { RootState } from "@/lib/store";
+import { useEffect } from "react";
 
 export default function BillForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
-      curtains_list: [
+      shutters: [
         {
-          shutter_type: "",
-          width: 0,
-          height: 0,
-          area: 0,
+          type: "",
+          width: "0",
+          height: "0",
+          area: "0",
         },
       ],
+      discount: "0",
     },
+    resolver: yupResolver(billValidationObj),
   });
 
-  const {handleSubmit} = methods
+  const { handleSubmit, reset } = methods;
+  const id = searchParams.get("id") as string;
+  const bill: Bill = useSelector(
+    (state: RootState): Bill => state.bills.bills[Number(id)]
+  );
+
+  useEffect(() => {
+    if (searchParams.get("id") !== null) {
+      reset({
+        ...bill,
+      });
+    }
+  }, []);
 
   function submitHandler(data: any) {
     // console.log("From data" ,data)
-    dispatch(createBill(data))
-
-   
+    dispatch(createBill(data));
+    router.push("/bills");
   }
 
-  const bills : BillState= useSelector(selectBills)
-  console.log("From State",bills.bills);
+  const bills: BillState = useSelector(selectBills);
 
   return (
     <div>
@@ -49,7 +68,10 @@ export default function BillForm() {
               <ShutterList />
               <DiscountAndTotal />
               <div className="w-1/4">
-                <Button name="Submit" onClickFunction={handleSubmit(submitHandler)} />
+                <Button
+                  name="Submit"
+                  onClickFunction={handleSubmit(submitHandler)}
+                />
               </div>
             </div>
           </form>

@@ -3,19 +3,19 @@ import CurtainRow from "./curtainRow";
 import Button from "./elements/button";
 import { useContext } from "react";
 import FormDataContext from "@/context/formDataContext/formDataContext";
-import { ICurtain, IFromDataContext } from "../interface";
+import { IShutter, IFromDataContext } from "../interface";
 
 export default function ShutterList() {
   const { control, watch } = useFormContext();
   const { listOfArea , totalArea, setAreas, setTotalArea} = useContext(FormDataContext) as IFromDataContext
   const { fields, append, insert, remove } = useFieldArray({
     control,
-    name: "curtains_list", // unique name for your Field Array
+    name: "shutters", // unique name for your Field Array
   });
 
   function addRowFunction() {
     append({
-      shutter_type: "",
+      shutters: "",
       width: 0,
       height: 0,
       area: 0
@@ -24,13 +24,14 @@ export default function ShutterList() {
 
   function cloneRowFunction(index: number) {
     insert(index + 1, {
-      shutter_type: watch(`curtains_list.${index}.shutter_type`),
-      width: Number(watch(`curtains_list.${index}.width`)),
-      height: Number(watch(`curtains_list.${index}.height`)),
+      shutter_type: watch(`shutters.${index}.type`),
+      width: Number(watch(`shutters.${index}.width`)),
+      height: Number(watch(`shutters.${index}.height`)),
     });
   }
 
-  setTotalArea(watch("curtains_list").map((item : ICurtain) => {return Number(item.area)}).reduce((total : number, item : number) => {return total+item}));
+
+  setTotalArea(watch("shutters").map((item : IShutter) => {return Number(item.area)}).reduce((total : number, item : number) => {return total+item}));
 
 
   function removeRowFunction(index: number) {

@@ -3,22 +3,29 @@ import Button from "./elements/button";
 import { LabelInput } from "./elements/labeledInput";
 import { addCustomer } from "@/lib/features/customers/customerSlice";
 import { useDispatch } from "react-redux";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import customerValidationObj from "../validators/customer.validator";
 
 export default function AddCustomerModel({
   setShowModal,
 }: {
   setShowModal: Function;
 }) {
-  const { register, handleSubmit} = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(customerValidationObj),
+  });
   const dispatch = useDispatch();
 
   function submitHandler(data: any) {
     const id: string = createRandomString(10);
-    data.id = id
-    console.log("new customer data",data);
-    dispatch(addCustomer(data))
-    setShowModal(false);  
+    data.id = id;
+
+    dispatch(addCustomer(data));
+    setShowModal(false);
   }
 
   return (
@@ -48,23 +55,35 @@ export default function AddCustomerModel({
                     fieldName="name"
                     labelName="Customer Name"
                   />
+                  <div className="text-sm text-right pr-2 font-light text-red-500">
+                    {errors.name?.message as string}
+                  </div>
                   <LabelInput
                     register={register}
                     fieldName="email"
                     labelName="Email"
                   />
+                  <div className="text-sm text-right pr-2 font-light text-red-500">
+                    {errors.email?.message as string}
+                  </div>
                 </div>
                 <div>
                   <LabelInput
                     register={register}
-                    fieldName="phone_number"
+                    fieldName="phoneNumber"
                     labelName="Contact Number"
                   />
+                  <div className="text-sm text-right pr-2 font-light text-red-500">
+                    {errors.phoneNumber?.message as string}
+                  </div>
                   <LabelInput
                     register={register}
                     fieldName="address"
                     labelName="Address"
                   />
+                  <div className="text-sm text-right pr-2 font-light text-red-500">
+                    {errors.address?.message as string}
+                  </div>
                 </div>
                 <div className="flex items-center justify-end ">
                   <Button
@@ -90,11 +109,11 @@ export default function AddCustomerModel({
   );
 }
 
-
-function createRandomString(length : number) : string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result : string = "";
-  for (let i : number = 0; i < length; i++) {
+function createRandomString(length: number): string {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result: string = "";
+  for (let i: number = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return result;

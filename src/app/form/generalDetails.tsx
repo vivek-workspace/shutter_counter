@@ -13,7 +13,7 @@ import { useFormContext } from "react-hook-form";
 
 export default function GeneralDetails() {
   const [showModal, setShowModal] = useState(false);
-  const {register} = useFormContext();
+  const {register,} = useFormContext();
   const customers : CustomerState = useSelector(selectCustomers);
 
 
@@ -33,13 +33,13 @@ export default function GeneralDetails() {
       <h3 className="text-slate-500">General Details</h3>
       <div className="flex items-center justify-between">
         <div className="w-1/3">
-          <LabelInput register={register} labelName="Person Name" fieldName={"person_name"} />
+          <LabelInput register={register} labelName="Person Name" fieldName={"personName"} />
         </div>
         <div className="w-1/4">
           <SelectOption
           register={register}
             labelName={"Customer Name"}
-            selectName={"customer_name"}
+            selectName={"customerId"}
             options={customerOptions}
           />
         </div>
@@ -47,7 +47,7 @@ export default function GeneralDetails() {
           <Button name={"New"} onClickFunction={() => setShowModal(true)} />
         </div>
         <div className="w-1/3">
-          <LabelDate register={register} fieldName={"due_date"} label={"Due Date"} />
+          <LabelDate register={register} fieldName={"dueDate"} label={"Due Date"} />
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ import FormDataContext from "@/context/formDataContext/formDataContext";
 import { IFromDataContext, IOptionInterface, ShutterState } from "../interface";
 import { useSelector } from "react-redux";
 import { selectShutters } from "@/lib/features/Shutters/shutterSlice";
-
+import lodash from "lodash"
 
 export default function CurtainRow({
   removeRowFunction,
@@ -26,29 +26,30 @@ export default function CurtainRow({
 }) {
   const { watch } = useFormContext();
 
-  const [width, setWidth] = useState<number>(
-    watch(`curtains_list.${index}.width`)
-  );
+  const [width, setWidth] = useState<number>(watch(`shutters.${index}.width`));
   const [height, setHeight] = useState<number>(
-    watch(`curtains_list.${index}.height`)
+    watch(`shutters.${index}.height`)
   );
   const [area, setArea] = useState<number>(0);
 
-  const { register } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   useEffect(() => {
     setArea(width * height);
   }, [width, height]);
 
   // console.log("List of area", listOfArea);/
-  const shutters: ShutterState = useSelector(selectShutters)
+  const shutters: ShutterState = useSelector(selectShutters);
 
   const shutterOptions: IOptionInterface[] = shutters.shutters.map((item) => {
     return {
       value: item.key,
-      name: item.type
-    }
-  })
+      name: item.type,
+    };
+  });
 
   function handleWidthChange(e: ChangeEvent<HTMLInputElement>) {
     const value: string = e.currentTarget.value;
@@ -66,10 +67,13 @@ export default function CurtainRow({
         <SelectOption
           register={register}
           labelName={"Shutter Type"}
-          selectName={`curtains_list.${index}.shutter_type`}
+          selectName={`shutters.${index}.type`}
           flex="0"
           options={shutterOptions}
         />
+        <div className="text-sm text-right pr-2 font-light text-red-500">
+          {errors.shutters && errors.shutters[index]}
+        </div>
       </div>
       <div className="w-1/6">
         <LabelInput
@@ -78,9 +82,12 @@ export default function CurtainRow({
           type="number"
           onChangeFunction={handleWidthChange}
           value={width.toString()}
-          fieldName={`curtains_list.${index}.width`}
+          fieldName={`shutters.${index}.width`}
           labelName="Width (cm)"
         />
+        <div className="text-sm text-right pr-2 font-light text-red-500">
+          {errors.shutters && errors.shutters[index]?.width?.message as string}
+        </div>
       </div>
       <div className="w-1/6">
         <LabelInput
@@ -89,9 +96,12 @@ export default function CurtainRow({
           type="number"
           onChangeFunction={handleHeightChange}
           value={height.toString()}
-          fieldName={`curtains_list.${index}.height`}
+          fieldName={`shutters.${index}.height`}
           labelName="Height (cm)"
         />
+        <div className="text-sm text-right pr-2 font-light text-red-500">
+          {errors.shutters && errors.shutters[index]?.height?.message as string}
+        </div>
       </div>
       <div className="w-1/6">
         <LabelInput
@@ -101,9 +111,12 @@ export default function CurtainRow({
           disabled="1"
           onChangeFunction={handleHeightChange}
           value={area.toString()}
-          fieldName={`curtains_list.${index}.area`}
+          fieldName={`shutters.${index}.area`}
           labelName="Area (cm square)"
         />
+        {/* <div className="text-sm text-right pr-2 font-light text-red-500">
+          {errors.shutters && errors.shutters[index]?.area.message as string}
+        </div> */}
       </div>
       <div className="flex w-1/4 justify-center">
         <Button name={"Clone"} onClickFunction={cloneRowFunction} />

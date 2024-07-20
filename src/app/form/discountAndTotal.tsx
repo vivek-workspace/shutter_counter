@@ -14,14 +14,14 @@ import { IFromDataContext } from "../interface";
 
 export default function DiscountAndTotal() {
   const { watch } = useFormContext();
-  const [checked, setChecked] = useState("flat_amount");
+  const [checked, setChecked] = useState("flatAmount");
   const [payableAmount, setPayableAmount] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const { totalArea } = useContext(FormDataContext) as IFromDataContext;
   const { register } = useFormContext();
 
   useEffect(() => {
-    if (checked == "flat_amount") {
+    if (checked == "flatAmount") {
       setPayableAmount(totalArea - discount);
     } else if (checked == "percentage") {
       setPayableAmount(totalArea - (totalArea * discount) / 100);
@@ -37,10 +37,10 @@ export default function DiscountAndTotal() {
             <h3>Discount Type</h3>
             <LabelRadio
               register={register}
-              checked={checked == "flat_amount" ? "1" : "0"}
+              checked={checked == "flatAmount" ? "1" : "0"}
               label={"Flat Amount"}
-              value={"flat_amount"}
-              radioName="discount_type"
+              value={"flatAmount"}
+              radioName="discountType"
               onClickFunction={(e: MouseEvent<HTMLInputElement>) => {
                 setChecked(e.currentTarget.value);
               }}
@@ -50,7 +50,7 @@ export default function DiscountAndTotal() {
               checked={checked == "percentage" ? "1" : "0"}
               label={"Percentage"}
               value={"percentage"}
-              radioName="discount_type"
+              radioName="discountType"
               onClickFunction={(e: MouseEvent<HTMLInputElement>) => {
                 setChecked(e.currentTarget.value);
               }}

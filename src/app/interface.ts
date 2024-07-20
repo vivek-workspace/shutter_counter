@@ -59,8 +59,8 @@ export interface IOptionInterface {
   name: string;
 }
 
-export interface ICurtain {
-  shutter_type: string;
+export interface IShutter {
+  type: string;
   width: string;
   height: string;
   area: string;
@@ -75,14 +75,12 @@ export interface BillState {
 }
 
 export interface Bill{
-  person_name: string;
-  customer_name: string;
-  due_date: string;
-  shutters: ICurtain[]
-  discount_type: string;
-  total_amount: number;
-  discount: number;
-  payable_amount: string;
+  personName: string;
+  customerId: string;
+  dueDate: string;
+  shutters: IShutter[]
+  discountType: string;
+  discount: string;
 }
 
 export interface CustomerState {
@@ -93,7 +91,7 @@ export interface Customer {
   id: string;
   name: string;
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   address: string;
 }
 
