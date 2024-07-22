@@ -36,14 +36,14 @@ export default function BillForm() {
     resolver: yupResolver(billValidationObj),
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset , register} = methods;
   const id = searchParams.get("id") as string;
   const bill: Bill = useSelector(
     (state: RootState): Bill => state.bills.bills[Number(id)]
   );
 
   useEffect(() => {
-    if (searchParams.get("id") !== null) {
+    if (id !== null) {
       reset({
         ...bill,
       });
@@ -52,11 +52,12 @@ export default function BillForm() {
 
   function submitHandler(data: any) {
     // console.log("From data" ,data)
-    dispatch(createBill(data));
+    if (id === null) dispatch(createBill(data));
+    // else dispatch(updateBill(id,data))
     router.push("/bills");
   }
 
-  const bills: BillState = useSelector(selectBills);
+  // const bills: BillState = useSelector(selectBills);
 
   return (
     <div>
@@ -64,12 +65,12 @@ export default function BillForm() {
         <FormDataProvider>
           <form action="">
             <div className="w-2/3 my-3 mx-auto m-20">
-              <GeneralDetails />
+              <GeneralDetails register={register} />
               <ShutterList />
               <DiscountAndTotal />
               <div className="w-1/4">
                 <Button
-                  name="Submit"
+                  name={id === null ? "Submit" : "Update"}
                   onClickFunction={handleSubmit(submitHandler)}
                 />
               </div>

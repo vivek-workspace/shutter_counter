@@ -24,9 +24,11 @@ export default function DiscountAndTotal() {
     if (checked == "flatAmount") {
       setPayableAmount(totalArea - discount);
     } else if (checked == "percentage") {
-      setPayableAmount(totalArea - (totalArea * discount) / 100);
+      const payableAmt : string = (totalArea - (totalArea * discount) / 100).toFixed(2)
+      setPayableAmount(Number(payableAmt));
     }
   }, [checked, totalArea, discount]);
+
 
   return (
     <div className="border my-3 rounded-lg p-3 border-slate-200">
@@ -71,9 +73,9 @@ export default function DiscountAndTotal() {
         </div>
         <div className="1/4">
           <h3 className="text-slate-500">Total Amount </h3>
-          <p>{totalArea.toString()}</p>
+          <p>{totalArea.toString()} ₹</p>
           <h3 className="text-slate-500">Payable Amount</h3>
-          <p>{payableAmount.toString()}</p>
+          <p>{payableAmount.toString()} ₹</p>
         </div>
         
       </div>

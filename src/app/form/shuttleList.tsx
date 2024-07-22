@@ -1,13 +1,15 @@
 import { useFieldArray, useFormContext } from "react-hook-form";
 import CurtainRow from "./curtainRow";
 import Button from "./elements/button";
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import FormDataContext from "@/context/formDataContext/formDataContext";
 import { IShutter, IFromDataContext } from "../interface";
 
 export default function ShutterList() {
   const { control, watch } = useFormContext();
-  const { listOfArea , totalArea, setAreas, setTotalArea} = useContext(FormDataContext) as IFromDataContext
+  const { listOfArea, totalArea, setAreas, setTotalArea } = useContext(
+    FormDataContext
+  ) as IFromDataContext;
   const { fields, append, insert, remove } = useFieldArray({
     control,
     name: "shutters", // unique name for your Field Array
@@ -18,7 +20,7 @@ export default function ShutterList() {
       shutters: "",
       width: 0,
       height: 0,
-      area: 0
+      area: 0,
     });
   }
 
@@ -30,9 +32,7 @@ export default function ShutterList() {
     });
   }
 
-
-  setTotalArea(watch("shutters").map((item : IShutter) => {return Number(item.area)}).reduce((total : number, item : number) => {return total+item}));
-
+  setTotalArea(countTotalArea(watch("shutters")));
 
   function removeRowFunction(index: number) {
     remove(index);
@@ -55,10 +55,21 @@ export default function ShutterList() {
       </div>
       <div className="w-full p-2 flex justify-between items-center">
         <div className="w-1/4">
-        <Button name={"Add"} onClickFunction={addRowFunction} />
+          <Button name={"Add"} onClickFunction={addRowFunction} />
         </div>
-        <p>Total Area :   {totalArea} cm square </p>
+        <p>Total Area : {totalArea} cm square </p>
       </div>
     </div>
   );
+}
+
+function countTotalArea(shutters: IShutter[]): number {
+  console.log("counting");
+  return shutters
+    .map((item: IShutter): number => {
+      return Number(item.area);
+    })
+    .reduce((total: number, item: number): number => {
+      return total + item;
+    });
 }

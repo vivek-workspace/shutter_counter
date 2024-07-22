@@ -4,10 +4,10 @@ import { IShutter } from "../interface";
 const billValidationObj = object().shape({
   personName: string().trim().required("Person name is required"),
   customerId: string().min(1, "Please select Customer").required(),
-  // dueDate: date().typeError("Pick a date").required(),
+  dueDate: string().typeError("Pick a date").required(),
   shutters: array().required().of(
     object({
-      type: string().min(1, "Please select Shutter type"),
+      type: string().min(1, "Please select Shutter type").required(),
       width: string().required().test("test_width", function (value : string){
         if(Number(value) == 0){
           return this.createError({
@@ -24,7 +24,7 @@ const billValidationObj = object().shape({
           });
         }else return true
       }),
-      area: string(),
+      area: string().required(),
     })
   ),
   discountType: string().required(),
