@@ -8,7 +8,11 @@ import GeneralDetails from "./generalDetails";
 import ShutterList from "./shuttleList";
 import DiscountAndTotal from "./discountAndTotal";
 import { useSelector, useDispatch } from "react-redux";
-import { createBill, selectBills } from "@/lib/features/bills/billSlice";
+import {
+  createBill,
+  selectBills,
+  updateBill,
+} from "@/lib/features/bills/billSlice";
 import { Bill, BillState } from "../interface";
 import { yupResolver } from "@hookform/resolvers/yup";
 import billValidationObj from "../validators/bill.validator";
@@ -31,34 +35,43 @@ export default function BillForm() {
           area: "0",
         },
       ],
+      discountType: "flatAmount",
       discount: "0",
     },
     resolver: yupResolver(billValidationObj),
   });
 
-  const { handleSubmit, reset , register} = methods;
+  const { handleSubmit, reset,watch, register } = methods;
   const id = searchParams.get("id") as string;
   const bill: Bill = useSelector(
     (state: RootState): Bill => state.bills.bills[Number(id)]
   );
 
   useEffect(() => {
-    if (id !== null) {
+    // console.log("bill",bill);
+    if (id !== null && bill !== undefined) {
       reset({
         ...bill,
       });
+    }else if(bill === undefined){
+      router.push("/form");
+      alert("invalid id")
     }
   }, []);
 
+  // console.log(" page ",watch());
   function submitHandler(data: any) {
     // console.log("From data" ,data)
     if (id === null) dispatch(createBill(data));
-    // else dispatch(updateBill(id,data))
+    else {
+      const intId: number = Number(id);
+      dispatch(updateBill({ intId, data }));
+    }
     router.push("/bills");
   }
 
   // const bills: BillState = useSelector(selectBills);
-
+  
   return (
     <div>
       <FormProvider {...methods}>

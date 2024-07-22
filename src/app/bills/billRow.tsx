@@ -49,13 +49,13 @@ export default function BillRow({
         <Link href={`/form?id=${index}`}>
           <Button name={"Update"} />
         </Link>
-        <Link href={`/form?id=${index}`}>
+        <div>
           <Button
             name={"Delete"}
             color="from-red-500 via-red-600 to-red-700"
             onClickFunction={() => deleteThisBill(index)}
           />
-        </Link>
+        </div>
       </div>
     </div>
   );

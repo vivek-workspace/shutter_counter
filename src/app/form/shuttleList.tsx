@@ -25,8 +25,9 @@ export default function ShutterList() {
   }
 
   function cloneRowFunction(index: number) {
+    console.log(watch(`shutters.${index}`));
     insert(index + 1, {
-      shutter_type: watch(`shutters.${index}.type`),
+      type: watch(`shutters.${index}.type`),
       width: Number(watch(`shutters.${index}.width`)),
       height: Number(watch(`shutters.${index}.height`)),
     });
@@ -64,7 +65,7 @@ export default function ShutterList() {
 }
 
 function countTotalArea(shutters: IShutter[]): number {
-  console.log("counting");
+  // console.log("counting");
   return shutters
     .map((item: IShutter): number => {
       return Number(item.area);

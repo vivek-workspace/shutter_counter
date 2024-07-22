@@ -9,10 +9,10 @@ const billValidationObj = object().shape({
     object({
       type: string().min(1, "Please select Shutter type").required(),
       width: string().required().test("test_width", function (value : string){
-        if(Number(value) == 0){
+        if(Number(value) <= 0){
           return this.createError({
             path: this.path,
-            message: "Width can not be 0",
+            message: "Width must be greater than 0",
           });
         }else return true
       }),
@@ -20,7 +20,7 @@ const billValidationObj = object().shape({
         if(Number(value) == 0){
           return this.createError({
             path: this.path,
-            message: "Height can not be 0",
+            message: "Height must be greater than 0",
           });
         }else return true
       }),

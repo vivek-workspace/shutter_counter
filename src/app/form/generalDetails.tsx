@@ -12,9 +12,8 @@ import { UseFormRegister, useFormContext } from "react-hook-form";
 const GeneralDetails = memo(
   ({ register }: { register: UseFormRegister<Bill> }) => {
     const [showModal, setShowModal] = useState(false);
-    // const {register} = useFormContext();
     const customers: CustomerState = useSelector(selectCustomers);
-
+    // console.log("asdf");
     const customerOptions: IOptionInterface[] = customers.customers.map(
       (item) => {
         return {

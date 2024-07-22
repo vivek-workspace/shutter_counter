@@ -2,6 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { ILabelInput } from "@/app/interface";
 import { ChangeEvent, useEffect } from "react";
 
+
 export function LabelInput({
   value,
   register,
@@ -21,6 +22,7 @@ export function LabelInput({
     if(value){ setValue(fieldName, value) }
   },[value])
 
+  
   return (
     <div
       className={`${
@@ -29,6 +31,7 @@ export function LabelInput({
     >
       <label htmlFor={fieldName}>{labelName} </label>
       <div>
+        
         {value ? (
           <input
             type={`${type == undefined ? "text" : type}`}

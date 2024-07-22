@@ -13,6 +13,9 @@ export const billSlice = createSlice({
     createBill: (state, action: PayloadAction<Bill>)  => {
       state.bills.push(action.payload)
     },
+    updateBill: (state, action: PayloadAction<{intId: number,data: Bill}>) => {
+      state.bills[action.payload.intId] = action.payload.data
+    },
     deleteBill: (state, action: PayloadAction<number>)  => {
       state.bills.splice(action.payload, 1)
     }
@@ -20,7 +23,7 @@ export const billSlice = createSlice({
 
 })
 
-export const {createBill, deleteBill} = billSlice.actions;
+export const {createBill, deleteBill, updateBill} = billSlice.actions;
 
 export const selectBills = (state: RootState) => state.bills
 
