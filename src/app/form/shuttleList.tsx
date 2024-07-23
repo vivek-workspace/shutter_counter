@@ -7,7 +7,7 @@ import { IShutter, IFromDataContext } from "../interface";
 
 export default function ShutterList() {
   const { control, watch } = useFormContext();
-  const { listOfArea, totalArea, setAreas, setTotalArea } = useContext(
+  const {  totalArea, setTotalArea } = useContext(
     FormDataContext
   ) as IFromDataContext;
   const { fields, append, insert, remove } = useFieldArray({

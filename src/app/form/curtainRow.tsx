@@ -72,7 +72,7 @@ export default function CurtainRow({
           options={shutterOptions}
         />
         <div className="text-sm text-right pr-2 font-light text-red-500">
-          {errors.shutters && errors.shutters[index]}
+          {errors.shutters && errors.shutters[index]?.type?.message}
         </div>
       </div>
       <div className="w-1/6">

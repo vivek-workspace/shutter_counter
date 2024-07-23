@@ -3,11 +3,11 @@ import FormDataContext from "./formDataContext"
 
 export default function FormDataProvider({children}:{children: ReactNode}){
 
-  const [listOfArea, setAreas] = useState<number[]>([0])
+  const [discountTypeContext, setDiscountTypeContext] = useState<string>("flatAmount")
   const [totalArea, setTotalArea] = useState<number>(0)
 
   return(
-    <FormDataContext.Provider value={{totalArea, setTotalArea, listOfArea, setAreas}}>
+    <FormDataContext.Provider value={{totalArea, setTotalArea, discountTypeContext, setDiscountTypeContext}}>
       {children}
     </FormDataContext.Provider>
   )

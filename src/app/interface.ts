@@ -29,9 +29,9 @@ export interface ILabelDate {
 }
 
 export interface IFromDataContext {
-  listOfArea: number[];
+  setDiscountTypeContext: Function;
   totalArea: number;
-  setAreas: Function;
+  discountTypeContext: string;
   setTotalArea: Function;
 }
 

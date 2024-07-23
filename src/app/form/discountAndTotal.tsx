@@ -7,65 +7,42 @@ import {
   MouseEvent,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import FormDataContext from "@/context/formDataContext/formDataContext";
 import { IFromDataContext } from "../interface";
 
 export default function DiscountAndTotal() {
+  const dntRenderCount = useRef(0);
+  dntRenderCount.current++;
+  
+
   const { watch } = useFormContext();
   const [checked, setChecked] = useState(watch("discountType"));
   const [payableAmount, setPayableAmount] = useState<number>(0);
-  const [discount, setDiscount] = useState<number>(Number(watch("discount")));
+  const [discount, setDiscount] = useState<number>(watch("discount"));
   const { totalArea } = useContext(FormDataContext) as IFromDataContext;
   const { register } = useFormContext();
-  console.log(checked);
-  console.log();
-  // useEffect(() => {
-  //   console.log(watch("discountType"));
-  //   setChecked(watch("discountType"));
-  // }, [watch("discountType")]);
 
-  // useEffect(() => {
-  //   console.log("d n t e", watch());
-  //   setDiscount(Number(watch("discount")));
-  // }, [watch("discount")]);
-
+ 
   useEffect(() => {
-    // console.log("total", totalArea, "payable", payableAmount);
-    // console.log("d n t e2", watch());
+    // setChecked(watch("discountType"))
+    // console.log("discount", "payable", payableAmount);
+    // console.log("d n t e2", dntRenderCount, watch());
     if (checked == "flatAmount") {
-      // console.log(
-      //   "discount Form",
-      //   Number(watch("discount")),
-      //   "discount State",
-      //   discount
-      // );
-      // console.log(
-      //   "inside if",
-      //   totalArea,
-      //   "t - d",
-      //   discount,
-      //   " = ",
-      //   totalArea - discount
-      // );
+     
       setPayableAmount(totalArea - discount);
     } else if (checked == "percentage") {
-      // console.log("inside else");
-      // console.log(
-      //   "discount Form",
-      //   Number(watch("discount")),
-      //   "discount State",
-      //   discount
-      // );
+     
       const payableAmt: string = (
         totalArea -
         (totalArea * discount) / 100
       ).toFixed(2);
       setPayableAmount(Number(payableAmt));
     }
-  }, [checked, totalArea, discount, watch("discount")]);
-  // console.log("d n t ", watch());
+  }, [checked, totalArea, discount]);
+  // console.log("d n t ",dntRenderCount, watch());
   return (
     <div className="border my-3 rounded-lg p-3 border-slate-200">
       <h3 className="text-slate-500">Discount</h3>
