@@ -13,7 +13,13 @@ import FormDataContext from "@/context/formDataContext/formDataContext";
 import { IFromDataContext, IOptionInterface, ShutterState } from "../interface";
 import { useSelector } from "react-redux";
 import { selectShutters } from "@/lib/features/Shutters/shutterSlice";
-import lodash from "lodash"
+import _ from "lodash";
+
+export type FormErrors = {
+  [key: string]: {
+    message?: string;
+  };
+};
 
 export default function CurtainRow({
   removeRowFunction,
@@ -61,6 +67,8 @@ export default function CurtainRow({
     setHeight(Number(value));
   }
 
+  console.log(errors, "sjgvjiasdhuvas");
+  const formErrors = errors as FormErrors;
   return (
     <div className="flex w-full items-center justify-between">
       <div className="w-1/4">
@@ -72,7 +80,7 @@ export default function CurtainRow({
           options={shutterOptions}
         />
         <div className="text-sm text-right pr-2 font-light text-red-500">
-          {errors.shutters && errors.shutters[index]?.type?.message}
+          {_.get(formErrors, `shutters.${index}.type.message`) as string}{" "}
         </div>
       </div>
       <div className="w-1/6">
@@ -86,7 +94,7 @@ export default function CurtainRow({
           labelName="Width (cm)"
         />
         <div className="text-sm text-right pr-2 font-light text-red-500">
-          {errors.shutters && errors.shutters[index]?.width?.message as string}
+        {_.get(formErrors, `shutters.${index}.width.message`) as string}
         </div>
       </div>
       <div className="w-1/6">
@@ -100,7 +108,8 @@ export default function CurtainRow({
           labelName="Height (cm)"
         />
         <div className="text-sm text-right pr-2 font-light text-red-500">
-          {errors.shutters && errors.shutters[index]?.height?.message as string}
+        {_.get(formErrors, `shutters.${index}.height.message`) as string}
+
         </div>
       </div>
       <div className="w-1/6">
