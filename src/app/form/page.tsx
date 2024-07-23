@@ -78,7 +78,7 @@ export default function BillForm() {
       router.push("/form");
       alert("invalid id");
     } 
-  }, []);
+  }, [bill, id, reset, router]);
   // console.log("Render Count ", count,"redux", bill);
   // console.log("Render Count ", count,"Form",watch());
 

@@ -17,10 +17,10 @@ export function LabelInput({
     setValue,
     formState: { errors },
   } = useFormContext();
-
+  let defaultvalue : string = value?value:"";
   useEffect(() => {
     if(value){ setValue(fieldName, value) }
-  },[value])
+  },[defaultvalue])
 
   
   return (
