@@ -20,7 +20,7 @@ export default function BillList() {
       </div>
       {bills.bills.length == 0 ? <p className="text-center">Nothing to Show here</p> : <></>}
       {bills.bills.map((bill: Bill, index: number) => (
-        <BillRow bill={bill} customers={customers.customers} index={index} />
+        <BillRow key={index} bill={bill} customers={customers.customers} index={index} />
       ))}
     </div>
   );
