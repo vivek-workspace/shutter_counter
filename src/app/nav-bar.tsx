@@ -5,7 +5,9 @@ export default function Navbar() {
   return (
     <div className="bg-slate-200 p-5 flex justify-between">
       <div>
+        <Link href={"/"}>
         <h3 className="text-3xl ">Curtain Counter</h3>
+        </Link>
       </div>
       <div>
         <Link href={"/form"}>

@@ -1,5 +1,14 @@
 import { IOptionInterface, ISelectOption } from "../../interface";
 import { useFormContext } from "react-hook-form";
+import _ from "lodash";
+
+
+export type FormErrors = {
+  [key: string]: {
+    message?: string;
+  };
+};
+
 
 export default function SelectOption({
   labelName,
@@ -15,6 +24,8 @@ export default function SelectOption({
     formState: { errors },
   } = useFormContext();
   // console.log("select", selectName);
+  const formErrors = errors as FormErrors;
+  
   return (
     <div
       className={`${
@@ -40,7 +51,7 @@ export default function SelectOption({
         </select>
         {
           <span className="text-sm font-light text-red-500">
-            {errors[selectName]?.message as string}
+            {_.get(formErrors, `${selectName}.message`) as string}
           </span>
         }
       </div>

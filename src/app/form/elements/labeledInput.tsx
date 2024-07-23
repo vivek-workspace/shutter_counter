@@ -1,6 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { ILabelInput } from "@/app/interface";
 import { ChangeEvent, useEffect } from "react";
+import _ from "lodash";
+
+
+export type FormErrors = {
+  [key: string]: {
+    message?: string;
+  };
+};
 
 
 export function LabelInput({
@@ -22,6 +30,7 @@ export function LabelInput({
     if(value){ setValue(fieldName, value) }
   },[defaultvalue])
 
+  const formErrors = errors as FormErrors;
   
   return (
     <div
@@ -68,8 +77,8 @@ export function LabelInput({
         )}
 
         {
-          <span className="text-sm font-light text-red-500">
-            {errors[fieldName]?.message as string}
+          <span className="text-sm font-light text-red-500">  
+            {_.get(formErrors, `${fieldName}.message`) as string}
           </span>
         }
       </div>

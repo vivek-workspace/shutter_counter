@@ -79,9 +79,9 @@ export default function CurtainRow({
           flex="0"
           options={shutterOptions}
         />
-        <div className="text-sm text-right pr-2 font-light text-red-500">
+        {/* <div className="text-sm text-right pr-2 font-light text-red-500">
           {_.get(formErrors, `shutters.${index}.type.message`) as string}{" "}
-        </div>
+        </div> */}
       </div>
       <div className="w-1/6">
         <LabelInput
@@ -93,9 +93,9 @@ export default function CurtainRow({
           fieldName={`shutters.${index}.width`}
           labelName="Width (cm)"
         />
-        <div className="text-sm text-right pr-2 font-light text-red-500">
+        {/* <div className="text-sm text-right pr-2 font-light text-red-500">
         {_.get(formErrors, `shutters.${index}.width.message`) as string}
-        </div>
+        </div> */}
       </div>
       <div className="w-1/6">
         <LabelInput
@@ -107,10 +107,10 @@ export default function CurtainRow({
           fieldName={`shutters.${index}.height`}
           labelName="Height (cm)"
         />
-        <div className="text-sm text-right pr-2 font-light text-red-500">
+        {/* <div className="text-sm text-right pr-2 font-light text-red-500">
         {_.get(formErrors, `shutters.${index}.height.message`) as string}
 
-        </div>
+        </div> */}
       </div>
       <div className="w-1/6">
         <LabelInput
