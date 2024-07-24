@@ -31,23 +31,23 @@ export default function BillRow({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="w-1/6">
+      <div className="w-2/12 ">
         {customers
           .filter((item: Customer): boolean => {
             return item.id === bill.customerId ? true : false;
           })
           .map((item: Customer): string => item.name)}
       </div>
-      <div className="w-1/6">{bill.personName}</div>
-      <div className="w-1/6">{bill.dueDate.toString()}</div>
-      <div className="w-1/12">{totalAmt} ₹</div>
-      <div className="w-1/12">
+      <div className="w-2/12 ">{bill.personName}</div>
+      <div className="w-1/12 ">{bill.dueDate.toString()}</div>
+      <div className="w-1/6 ">{totalAmt} ₹</div>
+      <div className="w-1/12 ">
         {`${bill.discount}  ${bill.discountType == "percentage" ? "%" : " ₹"}`}
       </div>
-      <div className="w-1/12">{payableAmt} ₹</div>
-      <div className="w-1/4 flex justify-around">
+      <div className="w-2/12 ">{payableAmt.toFixed(2)} ₹</div>
+      <div className="w-3/12  flex justify-around">
         <Link href={`/form?id=${index}`}>
-          <Button name={"Update"} />
+          <Button name={"Update"} />  
         </Link>
         <div>
           <Button

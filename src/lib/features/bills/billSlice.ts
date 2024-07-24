@@ -25,6 +25,6 @@ export const billSlice = createSlice({
 
 export const {createBill, deleteBill, updateBill} = billSlice.actions;
 
-export const selectBills = (state: RootState) => state.bills
+export const selectBills = (state: RootState) => state.billReducer
 
 export default billSlice.reducer

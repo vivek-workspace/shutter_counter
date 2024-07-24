@@ -28,7 +28,7 @@ export function LabelInput({
   let defaultvalue : string = value?value:"";
   useEffect(() => {
     if(value){ setValue(fieldName, value) }
-  },[defaultvalue])
+  },[defaultvalue, fieldName, value, setValue])
 
   const formErrors = errors as FormErrors;
   

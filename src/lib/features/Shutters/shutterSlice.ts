@@ -39,6 +39,6 @@ export const shutterSlice = createSlice({
 
 export const {addShutter} = shutterSlice.actions;
 
-export const selectShutters = (state: RootState) => state.shutters
+export const selectShutters = (state: RootState) => state.shutterReducer
 
 export default shutterSlice.reducer

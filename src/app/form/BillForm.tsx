@@ -31,7 +31,7 @@ export default function BillForm() {
     
   let bill: Bill | null = useSelector((state: RootState): Bill | null=> {
     if(id != null){
-      return state.bills.bills[id]
+      return state.billReducer.bills[id]
     }
     else {
       return null
@@ -102,7 +102,7 @@ export default function BillForm() {
       <FormProvider {...methods}>
         <FormDataProvider>
           <form action="">
-            <div className="w-2/3 my-3 mx-auto m-20">
+            <div className="w-4/5 my-3 mx-auto m-20">
               <GeneralDetails register={register} />
               <ShutterList />
               <DiscountAndTotal />

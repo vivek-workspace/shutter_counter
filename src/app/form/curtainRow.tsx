@@ -14,6 +14,10 @@ import { IFromDataContext, IOptionInterface, ShutterState } from "../interface";
 import { useSelector } from "react-redux";
 import { selectShutters } from "@/lib/features/Shutters/shutterSlice";
 import _ from "lodash";
+import { useSortable } from "@dnd-kit/sortable";
+import { list } from "postcss";
+import { CSS } from "@dnd-kit/utilities";
+import DNDHandle from "./elements/dndhandle";
 
 export type FormErrors = {
   [key: string]: {
@@ -25,10 +29,12 @@ export default function CurtainRow({
   removeRowFunction,
   cloneRowFunction,
   index,
+  id,
 }: {
   removeRowFunction: UseFieldArrayRemove;
   cloneRowFunction: UseFieldArrayRemove;
   index: number;
+  id: string;
 }) {
   const { watch } = useFormContext();
 
@@ -37,6 +43,14 @@ export default function CurtainRow({
     watch(`shutters.${index}.height`)
   );
   const [area, setArea] = useState<number>(0);
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   const {
     register,
@@ -67,10 +81,16 @@ export default function CurtainRow({
     setHeight(Number(value));
   }
 
-  console.log(errors, "sjgvjiasdhuvas");
   const formErrors = errors as FormErrors;
   return (
-    <div className="flex w-full items-center justify-between">
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex px-2 my-2 bg-slate-100 rounded-md border border-slate-50 w-full items-center justify-between"
+    >
+      <div {...attributes} {...listeners} className="cursor-ns-resize">
+        <DNDHandle />
+      </div>
       <div className="w-1/4">
         <SelectOption
           register={register}
@@ -119,7 +139,7 @@ export default function CurtainRow({
           type="number"
           disabled="1"
           onChangeFunction={handleHeightChange}
-          value={area.toString()}
+          value={area.toFixed(2)}
           fieldName={`shutters.${index}.area`}
           labelName="Area (cm square)"
         />
@@ -127,7 +147,7 @@ export default function CurtainRow({
           {errors.shutters && errors.shutters[index]?.area.message as string}
         </div> */}
       </div>
-      <div className="flex w-1/4 justify-center">
+      <div className="flex w-1/5 justify-center">
         <Button name={"Clone"} onClickFunction={cloneRowFunction} />
         {index !== 0 ? (
           <Button

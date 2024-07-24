@@ -29,6 +29,6 @@ export const customerSlice = createSlice({
 export const { addCustomer } = customerSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCustomers = (state: RootState) => state.customers
+export const selectCustomers = (state: RootState) => state.customerReducer
 
 export default customerSlice.reducer
